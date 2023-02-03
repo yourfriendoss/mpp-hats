@@ -297,6 +297,15 @@ MPP.client.on('c', msg => {
     if (!Array.isArray(msg.c)) return;
     for (let i = 0; i < msg.c.length; i++) {
         // console.log(msg.c[i])
+        let sender;
+        if(msg.c[i].a == "a") sender = msg.c[i].p.id;
+        if(msg.c[i].a == "dm") {
+            if(msg.c[i].sender.id == MPP.client.participantId) {
+                sender = msg.c[i].recipient.id;
+            } else {
+                sender = msg.c[i].sender.id;
+            }
+        }
         let p = MPP.client.findParticipantById(msg.c[i].p.id);
         if (!p) continue;
         let hatURL = $(p.nameDiv).children('.hat').css('content');
